@@ -1,0 +1,6 @@
+##fileformat=VCFv4.2
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
+sample_chr1	6	1	A	O	60	PASS	hoge
+sample_chr1	5	2	A	N	60	PASS	hoge
+sample_chr1	3	3	A	M	60	PASS	hoge
+sample_chr1	3	4	A	L	60	PASS	hoge

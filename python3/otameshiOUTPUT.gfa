@@ -1,0 +1,26 @@
+H	VN:Z:1.0
+P	REF	0,1,2,3,4,5
+S	0	AB
+L	0	+	1	+	0M
+L	0	+	6	+	0M
+L	0	+	7	+	0M
+S	1	C
+L	1	+	2	+	0M
+S	2	D
+L	2	+	3	+	0M
+L	2	+	8	+	0M
+S	3	E
+L	3	+	4	+	0M
+L	3	+	9	+	0M
+S	4	F
+L	4	+	5	+	0M
+S	5	GHIJK
+S	6	M
+L	6	+	2	+	0M
+S	7	L
+L	7	+	2	+	0M
+S	8	N
+L	8	+	4	+	0M
+L	8	+	9	+	0M
+S	9	O
+L	9	+	5	+	0M
