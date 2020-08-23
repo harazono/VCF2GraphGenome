@@ -5,41 +5,7 @@ import vcf
 from Bio import SeqIO
 from dataclasses import dataclass, field
 from typing import List, Tuple, Dict
-
-@dataclass
-class node:
-	pass
-
-@dataclass
-class node:
-	identifier: int
-	seq: str
-	ref_chrom: str
-	ref_chrom_pos: (int, int)
-	edges: List[node]
-	isRef: bool
-	def node_print(self):
-		print(f"identifier: {self.identifier}")
-		print(f"ref_chrom: {self.ref_chrom}")
-		print(f"ref_chrom_pos: {self.ref_chrom_pos}")
-		print(f"isRef: {self.isRef}")
-		print(f"edges: {[x.identifier for x in self.edges]}")
-		print(f"seq: {self.seq}")
-		print(f"\n")
-
-def findAlleleinRef(node_array, pos):
-	for each_node in node_array:
-		if each_node.ref_chrom_pos[0] <= pos and each_node.ref_chrom_pos[1] >= pos:
-			return each_node
-	return None
-
-def findRefNodeId(node_array):
-	ret_array = []
-	for each_node in node_array:
-		if each_node.isRef:
-			ret_array.append(each_node.identifier)
-	ret_array = sorted(ret_array)
-	return ret_array
+from vcf2gg_util import *
 
 
 def construct_graph(node_array, ref_dict, snp_dict):
@@ -144,11 +110,13 @@ def convert2GFA1(node_array, filename = "otameshiOUTPUT.gfa"):
 def main():
 	usage = f"usage: {__file__} なんか書く。"
 	parser = OptionParser(usage = usage)
-	parser.add_option("--vcf", dest="vcf_path", help = "Path to vcf file(required)")
-	parser.add_option("--ref", dest="ref_path", help = "Path to reference genome fasta file(required)")
+	parser.add_option("--vcf",  dest="vcf_path" , help = "Path to vcf file(required)")
+	parser.add_option("--ref",  dest="ref_path" , help = "Path to reference genome fasta file(required)")
+	parser.add_option("--gfa1", dest="gfa1_path", help = "Path to GFA1 file to be saved(default: otameshiOUTPUT.gfa)", default = "otameshiOUTPUT.gfa")
 	(options, args) = parser.parse_args()
 	vcf_path = options.vcf_path
 	ref_path = options.ref_path
+	gfa_path = options.gfa1_path
 	if vcf_path is None:
 		print(f"vcf_path is required")
 		sys.exit(1)
@@ -165,13 +133,12 @@ def main():
 	for each_snp in vcf_fh:
 		if each_snp.CHROM in snp_dict.keys():
 			snp_dict[each_snp.CHROM].append((each_snp.POS, each_snp.REF, each_snp.ALT))
-			#print(type(each_snp.ALT[0]))
 		else:
 			snp_dict[each_snp.CHROM] = [(each_snp.POS, each_snp.REF, each_snp.ALT)]
 
 	node_array = []
 	construct_graph(node_array, ref_dict, snp_dict)
-	convert2GFA1(node_array)
+	convert2GFA1(node_array, gfa_path)
 
 
 
